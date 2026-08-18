@@ -4,10 +4,14 @@ param(
     [string]$Publisher = 'CN=Snap Workspace Development',
     [string]$PfxPath,
     [string]$PfxPassword,
-    [switch]$RequireMsix
+    [switch]$RequireMsix,
+    [switch]$SkipMsix
 )
 
 $ErrorActionPreference = 'Stop'
+if ($RequireMsix -and $SkipMsix) {
+    throw 'RequireMsix and SkipMsix cannot be used together.'
+}
 $repoRoot = Split-Path -Parent $PSScriptRoot
 if ([string]::IsNullOrWhiteSpace($OutputRoot)) {
     $OutputRoot = Join-Path $repoRoot "artifacts\release-$Version"
@@ -62,10 +66,12 @@ $standaloneZip = Join-Path $outputFullPath "SnapWorkspace-$Version-win-x64-self-
 Compress-Archive -Path (Join-Path $portableDir '*') -DestinationPath $portableZip -CompressionLevel Optimal
 Compress-Archive -Path (Join-Path $standaloneDir '*') -DestinationPath $standaloneZip -CompressionLevel Optimal
 
-& $dotnet publish $project -c Release -r win-x64 --self-contained true `
-    -p:Version=$Version -p:FileVersion=$fourPartVersion -p:AssemblyVersion=$fourPartVersion `
-    -p:PublishSingleFile=false -p:DebugType=None -p:DebugSymbols=false -o $msixPublishDir
-if ($LASTEXITCODE -ne 0) { throw 'MSIX staging publish failed.' }
+if (-not $SkipMsix) {
+    & $dotnet publish $project -c Release -r win-x64 --self-contained true `
+        -p:Version=$Version -p:FileVersion=$fourPartVersion -p:AssemblyVersion=$fourPartVersion `
+        -p:PublishSingleFile=false -p:DebugType=None -p:DebugSymbols=false -o $msixPublishDir
+    if ($LASTEXITCODE -ne 0) { throw 'MSIX staging publish failed.' }
+}
 
 $windowsKits = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\bin'
 $makeAppx = if (Test-Path -LiteralPath $windowsKits) {
@@ -82,7 +88,7 @@ $signTool = if (Test-Path -LiteralPath $windowsKits) {
 }
 
 $msixPath = Join-Path $outputFullPath "SnapWorkspace-$Version-win-x64.msix"
-if ($makeAppx) {
+if (-not $SkipMsix -and $makeAppx) {
     $staging = Join-Path $outputFullPath 'msix-staging'
     New-Item -ItemType Directory -Path $staging -Force | Out-Null
     Copy-Item -Path (Join-Path $msixPublishDir '*') -Destination $staging -Recurse
@@ -108,6 +114,8 @@ if ($makeAppx) {
     }
 } elseif ($RequireMsix) {
     throw 'MakeAppx was not found. Install the Windows SDK or run on windows-latest.'
+} elseif ($SkipMsix) {
+    Write-Output 'MSIX creation was explicitly skipped.'
 } else {
     Write-Warning 'Windows SDK not found; portable packages were built and MSIX creation was skipped.'
 }

@@ -68,10 +68,12 @@ jobs:
           PFX_PASSWORD: ${{ secrets.MSIX_PFX_PASSWORD }}
           MSIX_PUBLISHER: ${{ secrets.MSIX_PUBLISHER }}
         run: |
-          $arguments = @('-Version', '${{ steps.version.outputs.value }}', '-RequireMsix')
+          $arguments = @('-Version', '${{ steps.version.outputs.value }}')
           if (Test-Path "$env:RUNNER_TEMP\snapworkspace.pfx") {
             $publisher = if ([string]::IsNullOrWhiteSpace($env:MSIX_PUBLISHER)) { throw 'MSIX_PUBLISHER secret is required when signing.' } else { $env:MSIX_PUBLISHER }
-            $arguments += @('-Publisher', $publisher, '-PfxPath', "$env:RUNNER_TEMP\snapworkspace.pfx", '-PfxPassword', $env:PFX_PASSWORD)
+            $arguments += @('-RequireMsix', '-Publisher', $publisher, '-PfxPath', "$env:RUNNER_TEMP\snapworkspace.pfx", '-PfxPassword', $env:PFX_PASSWORD)
+          } else {
+            $arguments += '-SkipMsix'
           }
           & .\scripts\Build-Release.ps1 @arguments
       - uses: actions/upload-artifact@v4

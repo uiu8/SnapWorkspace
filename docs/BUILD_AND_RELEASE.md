@@ -158,6 +158,12 @@ artifacts\release-0.9.5\
 .\scripts\Build-Release.ps1 -Version 0.9.5 -RequireMsix
 ```
 
+明确只构建两个 ZIP、不生成 MSIX：
+
+```powershell
+.\scripts\Build-Release.ps1 -Version 0.9.5 -SkipMsix
+```
+
 签名：
 
 ```powershell
@@ -236,6 +242,8 @@ Expand-Archive `
 - `MSIX_PFX_BASE64`；
 - `MSIX_PFX_PASSWORD`；
 - `MSIX_PUBLISHER`。
+
+三个签名 secret 未配置时，发布工作流会传入 `-SkipMsix`，只上传两个 ZIP 和校验和；配置有效证书后才要求构建并签名 MSIX。工作流不会把未签名 MSIX 作为公开下载项。
 
 ## 发布前清单
 
