@@ -1,0 +1,62 @@
+name: Bug report
+description: Report a reproducible Snap Workspace problem
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Please remove private data from screenshots and support bundles before uploading them.
+  - type: input
+    id: version
+    attributes:
+      label: Snap Workspace version
+      description: Shown in file properties or release name
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows build
+      description: Run winver and include the edition, version and OS build
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Native Snap restore
+        - Compatibility placement
+        - Background startup
+        - Capture and application classification
+        - Editor or settings UI
+        - Tray, hotkey or login startup
+        - Import, backup or support bundle
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Include the smallest workspace and sequence that reproduces the problem
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I inspected attachments and removed information I do not intend to share.
+          required: true

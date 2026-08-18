@@ -1,0 +1,27 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - name: Build
+        run: dotnet build SnapWorkspace.Route3.slnx -c Release --nologo
+      - name: Workspace model test
+        run: dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- workspace-model-test
+      - name: Layout recognizer test
+        run: dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- layout-recognizer-test
+      - name: Background process reuse test
+        run: dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- background-reuse-test
+      - name: Application support and tray smoke test
+        run: dotnet run --project SnapWorkspace.App.SmokeTests -c Release --no-build
+
+      # Route 3 window movement tests are intentionally excluded from hosted CI.
+      # They require an interactive desktop and an explicitly validated Shell build.

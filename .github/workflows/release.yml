@@ -1,0 +1,91 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version without the v prefix
+        required: true
+        default: 0.9.4
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $version = if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+            '${{ inputs.version }}'
+          } else {
+            '${{ github.ref_name }}'.TrimStart('v')
+          }
+          "value=$version" >> $env:GITHUB_OUTPUT
+      - name: Build and test
+        shell: pwsh
+        run: |
+          dotnet build SnapWorkspace.Route3.slnx -c Release --nologo
+          dotnet run --project SnapWorkspace.App.SmokeTests -c Release --no-build
+          dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- workspace-model-test
+          dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- layout-recognizer-test
+          dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- background-reuse-test
+      - name: Accessibility UI regression
+        shell: pwsh
+        run: |
+          $report = Join-Path $env:RUNNER_TEMP 'accessibility.txt'
+          $preview = Join-Path $env:RUNNER_TEMP 'accessibility.png'
+          $process = Start-Process -FilePath '.\SnapWorkspace.App\bin\Release\net10.0-windows\SnapWorkspace.exe' `
+            -ArgumentList @('--render-preview', $preview, '--settings-preview', '--accessibility-test-output', $report) `
+            -PassThru -Wait -WindowStyle Hidden
+          if ($process.ExitCode -ne 0 -or -not (Test-Path $preview) -or (Get-Content $report -Raw) -notmatch '^PASS:') {
+            throw 'Accessibility UI regression failed.'
+          }
+      - name: Restore optional signing certificate
+        shell: pwsh
+        env:
+          PFX_BASE64: ${{ secrets.MSIX_PFX_BASE64 }}
+        run: |
+          if (-not [string]::IsNullOrWhiteSpace($env:PFX_BASE64)) {
+            [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\snapworkspace.pfx", [Convert]::FromBase64String($env:PFX_BASE64))
+          }
+      - name: Package
+        shell: pwsh
+        env:
+          PFX_PASSWORD: ${{ secrets.MSIX_PFX_PASSWORD }}
+          MSIX_PUBLISHER: ${{ secrets.MSIX_PUBLISHER }}
+        run: |
+          $arguments = @('-Version', '${{ steps.version.outputs.value }}', '-RequireMsix')
+          if (Test-Path "$env:RUNNER_TEMP\snapworkspace.pfx") {
+            $publisher = if ([string]::IsNullOrWhiteSpace($env:MSIX_PUBLISHER)) { throw 'MSIX_PUBLISHER secret is required when signing.' } else { $env:MSIX_PUBLISHER }
+            $arguments += @('-Publisher', $publisher, '-PfxPath', "$env:RUNNER_TEMP\snapworkspace.pfx", '-PfxPassword', $env:PFX_PASSWORD)
+          }
+          & .\scripts\Build-Release.ps1 @arguments
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SnapWorkspace-${{ steps.version.outputs.value }}
+          path: artifacts/release-${{ steps.version.outputs.value }}/*
+          if-no-files-found: error
+      - name: Attest release artifacts
+        uses: actions/attest@v4
+        with:
+          subject-path: artifacts/release-${{ steps.version.outputs.value }}/*
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ github.ref_name }}" artifacts/release-${{ steps.version.outputs.value }}/* --verify-tag --generate-notes

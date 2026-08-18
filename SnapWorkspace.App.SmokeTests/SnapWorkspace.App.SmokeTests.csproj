@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SnapWorkspace.App\SnapWorkspace.App.csproj" />
+    <ProjectReference Include="..\SnapWorkspace.Route3.Core\SnapWorkspace.Route3.Core.csproj" />
+  </ItemGroup>
+</Project>

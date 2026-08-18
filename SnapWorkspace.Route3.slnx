@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SnapWorkspace.Route3.Core/SnapWorkspace.Route3.Core.csproj" />
+  <Project Path="SnapWorkspace.Route3.Demo/SnapWorkspace.Route3.Demo.csproj" />
+  <Project Path="SnapWorkspace.App/SnapWorkspace.App.csproj" />
+  <Project Path="SnapWorkspace.App.SmokeTests/SnapWorkspace.App.SmokeTests.csproj" />
+</Solution>
