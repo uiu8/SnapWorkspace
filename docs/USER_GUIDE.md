@@ -2,7 +2,7 @@
 
 本手册适用于 Snap Workspace 0.9.6。它从安装开始，说明如何创建、捕捉、编辑、恢复、结束、备份和排查工作区。
 
-本次 GitHub 更新只同步源码与文档，未新增安装包。下载前请核对 [Releases](https://github.com/uiu8/SnapWorkspace/releases) 中的实际版本；旧版安装包不具备本文新增的 0.9.6 兼容策略。
+安装包见 [0.9.6 Release](https://github.com/uiu8/SnapWorkspace/releases/tag/v0.9.6)。推荐免装 .NET 的 `self-contained` ZIP；升级前先保存编辑并退出旧进程，避免单实例机制继续激活旧版。旧版安装包不具备本文新增的 0.9.6 兼容策略。
 
 > 重要限制：当前原生 Snap 路径只支持通过能力探测的 Windows 11 Shell、主显示器和最多 4 个原生窗口。兼容定位及后台应用不计入 4 个原生窗口的上限。
 

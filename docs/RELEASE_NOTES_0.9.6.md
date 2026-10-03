@@ -2,6 +2,15 @@
 
 0.9.6 调整了 Windows 更新后的 Route 3 兼容策略。`windowsudk.shellcommon.dll` 的精确 SHA-256 不再是软件或原生 Snap 路径的硬门槛。
 
+> Route 3 工程预览版，未代码签名。接口基础和本机验证不等于所有 Windows 11 版本均兼容。
+
+## 下载与升级
+
+- `SnapWorkspace-0.9.6-win-x64-self-contained.zip`：推荐，无需另装 .NET。
+- `SnapWorkspace-0.9.6-win-x64-portable.zip`：较小，需要 .NET 10 Desktop Runtime x64。
+- `SHA256SUMS.txt`：用于核对两个 ZIP 的 SHA-256。
+- 本次不发布未签名 MSIX。保存编辑并完全退出旧进程后再运行新版；保留 `%LOCALAPPDATA%\SnapWorkspace` 中的设置和工作区。
+
 ## 改进
 
 - Shell 兼容状态改为三态：
@@ -22,7 +31,7 @@
 
 - [Windows 版本建议](WINDOWS_COMPATIBILITY.md)：版本发布时间、最早确认的 v3 样本和理论兼容边界。
 - [原生 Snap 调用原理](NATIVE_SNAP_INTERNALS.md)：发现接口、运行时调用与剩余兼容风险，附脱敏的 DLL / PDB 证据索引。
-- 本次 GitHub 同步包含 0.9.6 源码和文档，不新增安装包或 GitHub Release。
+- 两个 ZIP 均附带完整中文文档和本版本说明。
 
 ## 安全边界
 

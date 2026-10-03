@@ -4,7 +4,7 @@ Snap Workspace 是一个面向 Windows 11 的工作区管理器。它保存应�
 
 > 当前源码版本：**0.9.6，Route 3 工程预览版**。原生 Snap 后端依赖未经公开承诺的 Windows Shell 接口。Shell 哈希只用于诊断和兼容等级；真正的启用条件是运行类、`IsSupported`、manager 创建及 v2/v3 接口均通过运行时探测。探测失败时仍会安全拒绝原生提交，不会假装创建了 Snap Group。
 
-本次同步仅更新源码和文档，不新增安装包。截至 2026-10-03，[GitHub Releases](https://github.com/uiu8/SnapWorkspace/releases) 中的安装包仍为 0.9.5；需要 0.9.6 行为时请从当前源码构建。旧安装包不会因为仓库更新而改变兼容策略。
+安装包见 [0.9.6 Release](https://github.com/uiu8/SnapWorkspace/releases/tag/v0.9.6)。推荐下载 `self-contained` ZIP，无需另装 .NET。该版本仍为工程预览版，未代码签名；升级前请保存编辑并退出旧进程，保留现有工作区数据。
 
 ## 先了解三个角色
 
@@ -39,7 +39,7 @@ Snap Workspace 是一个面向 Windows 11 的工作区管理器。它保存应�
 
 步骤：
 
-1. 从 [Releases](https://github.com/uiu8/SnapWorkspace/releases) 下载实际已发布的 `self-contained` ZIP 并解压，或按下文从源码构建 0.9.6；
+1. 从 [0.9.6 Release](https://github.com/uiu8/SnapWorkspace/releases/tag/v0.9.6) 下载并解压 `SnapWorkspace-0.9.6-win-x64-self-contained.zip`，或按下文从源码构建；
 2. 运行 `SnapWorkspace.exe`；
 3. 查看左下角 Route 3 能力卡片；
 4. 选择“新建工作区”手工编排，或选择“捕捉工作区”识别当前应用；
