@@ -2,7 +2,9 @@
 
 Snap Workspace 是一个面向 Windows 11 的工作区管理器。它保存应用、窗口身份和布局，在恢复时优先通过 Windows Shell 的原生 Snap 通道创建布局；不支持 Snap 的窗口使用一次性兼容定位，需要运行但不应出现在桌面的应用则按后台角色处理。
 
-> 当前版本：**0.9.5，Route 3 工程预览版**。原生 Snap 后端依赖未经公开承诺的 Windows Shell 接口，只会在已验证的 Shell 二进制上启用。未知系统版本会安全拒绝原生提交，不会假装创建了 Snap Group。
+> 当前源码版本：**0.9.6，Route 3 工程预览版**。原生 Snap 后端依赖未经公开承诺的 Windows Shell 接口。Shell 哈希只用于诊断和兼容等级；真正的启用条件是运行类、`IsSupported`、manager 创建及 v2/v3 接口均通过运行时探测。探测失败时仍会安全拒绝原生提交，不会假装创建了 Snap Group。
+
+本次同步仅更新源码和文档，不新增安装包。截至 2026-10-03，[GitHub Releases](https://github.com/uiu8/SnapWorkspace/releases) 中的安装包仍为 0.9.5；需要 0.9.6 行为时请从当前源码构建。旧安装包不会因为仓库更新而改变兼容策略。
 
 ## 先了解三个角色
 
@@ -22,9 +24,22 @@ Snap Workspace 是一个面向 Windows 11 的工作区管理器。它保存应�
 - 单显示器或只使用主显示器恢复；
 - 使用 `self-contained` 包时不需要另装 .NET；使用较小的 `portable` 包时需要 .NET 10 Desktop Runtime x64。
 
+### 建议 Windows 版本
+
+| 版本 | 正式发布时间 | 原生 v3 的理论基础 | 建议 |
+|---|---|---|---|
+| 22H2 | 2022-09-20 | `22621.3085`，2024-01-23 更新开始有已确认样本 | 历史下限，不建议新装 |
+| 23H2 | 2023-10-31 | `22631.3085`，与 22H2 共用对应 Shell 文件 | 已有环境可测试 |
+| 24H2 | 2024-10-01（普遍发布） | `26100.1` 已确认包含 v3 | 有明确接口基础 |
+| 25H2 | 2025-09-30 | 与 24H2 共用核心，推定具备基础，仍需自检 | 推荐 x64 正式版并保持更新 |
+
+这是截至 2026-10-03 的选型建议与静态接口证据，不是全部系统的运行认证。微软未公开承诺该私有接口；最终以能力检测和实际恢复结果为准。日期来源、更新 KB、样本证据及 0.9.5 / 0.9.6 的差异见 [Windows 兼容说明](docs/WINDOWS_COMPATIBILITY.md)。
+
+### 首次使用
+
 步骤：
 
-1. 下载并解压 `SnapWorkspace-0.9.5-win-x64-self-contained.zip`；
+1. 从 [Releases](https://github.com/uiu8/SnapWorkspace/releases) 下载实际已发布的 `self-contained` ZIP 并解压，或按下文从源码构建 0.9.6；
 2. 运行 `SnapWorkspace.exe`；
 3. 查看左下角 Route 3 能力卡片；
 4. 选择“新建工作区”手工编排，或选择“捕捉工作区”识别当前应用；
@@ -52,13 +67,15 @@ Snap Workspace 是一个面向 Windows 11 的工作区管理器。它保存应�
 - [文档中心](docs/README.md)：按用户、原理、开发和支持场景导航；
 - [完整用户手册](docs/USER_GUIDE.md)：安装、创建、捕捉、编辑、恢复、快捷键和备份；
 - [核心概念与行为边界](docs/CORE_CONCEPTS.md)：Snap Group、三种角色、空槽位与应用识别；
+- [Windows 版本建议](docs/WINDOWS_COMPATIBILITY.md)：发布时间、理论接口门槛和运行时限制；
+- [原生 Snap 调用原理](docs/NATIVE_SNAP_INTERNALS.md)：接口如何发现、如何调用，以及尚未解决的兼容点；
 - [架构与恢复链路](docs/ARCHITECTURE.md)：模块划分、Shell 私有接口调用和事务顺序；
 - [工作区数据格式](docs/WORKSPACE_FORMAT.md)：schema v5、字段、示例和迁移规则；
 - [故障排查](docs/TROUBLESHOOTING.md)：原生 Snap、后台、Chrome、兼容窗口和匹配问题；
 - [隐私与诊断](docs/PRIVACY_AND_DIAGNOSTICS.md)：本地日志、支持包内容和敏感选项；
 - [构建与发布](docs/BUILD_AND_RELEASE.md)：开发环境、测试、打包、签名和 GitHub Actions；
 - [命令行与测试命令](docs/CLI_REFERENCE.md)：能力探测、布局导出和回归测试；
-- [路线图](docs/ROADMAP.md) 与 [0.9.5 发布说明](docs/RELEASE_NOTES_0.9.5.md)。
+- [路线图](docs/ROADMAP.md) 与 [0.9.6 发布说明](docs/RELEASE_NOTES_0.9.6.md)。
 
 ## 开发快速开始
 
@@ -79,13 +96,13 @@ dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- backgrou
 dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- runtime-routing-test
 ```
 
-真实原生布局测试需要交互式桌面和已验证的 Windows Shell，不能仅凭托管 CI 结果判断 Route 3 可用。
+真实原生布局测试需要交互式桌面和通过运行时能力探测的 Windows Shell，不能仅凭托管 CI 结果判断 Route 3 可用。
 
 ## 关键限制
 
 - 当前只恢复主显示器，已暂缓多显示器设计；
-- 当前已验证基线一次最多提交 4 个原生窗口，兼容和后台应用数量不限；
-- 原生后端与具体 Windows Shell 二进制耦合，跨电脑是否可用取决于能力探测结果；
+- 当前路线三一次最多提交 4 个原生窗口，兼容和后台应用数量不限；
+- 原生后端仍与私有 Windows Shell 合同耦合，跨电脑是否可用取决于运行时能力探测；未知哈希本身不再阻止运行；
 - 某些应用不支持 Snap、使用启动器子进程、需要管理员权限或没有稳定窗口标题，需要兼容角色、手动点选或自定义匹配规则；
 - 后台启动不是通用的“让任何程序永久无窗口运行”开关，只保证恢复事务内的无窗口状态；Chromium 浏览器使用其原生 `--no-startup-window` 协议；
 - 运行中工作区状态只保存在当前进程内，完整退出 Snap Workspace 后不会猜测并重建会话所有权。

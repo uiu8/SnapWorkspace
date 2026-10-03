@@ -150,12 +150,16 @@ public partial class MainWindow : Window
         _diagnostics.Record("route3_probe_completed", new
         {
             _capability.Supported,
+            compatibilityLevel = _capability.CompatibilityLevel.ToString(),
+            _capability.IsKnownShellBinary,
             _capability.EffectiveMaximumWindowsPerSubmission,
-            shellVersion = _capability.ShellBinaryVersion
+            shellVersion = _capability.ShellBinaryVersion,
+            shellSha256 = _capability.ShellBinarySha256
         });
         UpdateCapabilityCard(_capability);
         StatusText.Text = _capability.Supported
-            ? $"路线三可用 · 启动 {App.StartupClock.ElapsedMilliseconds} ms · {_windowSnapshots.Count} 个窗口可选"
+            ? $"路线三可用{CompatibilityStatusSuffix(_capability)} · " +
+              $"启动 {App.StartupClock.ElapsedMilliseconds} ms · {_windowSnapshots.Count} 个窗口可选"
             : $"路线三不可用：{_capability.Reason}";
 
         await RenderPreviewIfRequestedAsync();
@@ -819,11 +823,22 @@ public partial class MainWindow : Window
         CapabilityDot.Fill = capability.Supported
             ? (Brush)FindResource("SuccessBrush")
             : (Brush)FindResource("WarningBrush");
-        CapabilityTitle.Text = capability.Supported ? "路线三已启用" : "兼容模式待接管";
+        CapabilityTitle.Text = capability.Supported
+            ? capability.CompatibilityLevel == ShellCompatibilityLevel.KnownBaseline
+                ? "路线三已启用"
+                : "路线三已启用 · 运行时兼容"
+            : "兼容模式待接管";
         CapabilityDetails.Text = capability.Supported
-            ? $"Shell {capability.ShellBinaryVersion} · 上限 {capability.EffectiveMaximumWindowsPerSubmission} 窗口"
+            ? $"Shell {capability.ShellBinaryVersion} · " +
+              $"{(capability.IsKnownShellBinary ? "已验证基线" : "哈希仅用于诊断")} · " +
+              $"上限 {capability.EffectiveMaximumWindowsPerSubmission} 窗口"
             : capability.Reason;
     }
+
+    private static string CompatibilityStatusSuffix(SnapCapability capability) =>
+        capability.CompatibilityLevel == ShellCompatibilityLevel.RuntimeCompatible
+            ? "（运行时兼容）"
+            : string.Empty;
 
     private void Library_Click(object sender, RoutedEventArgs e) => ShowLibrary();
 

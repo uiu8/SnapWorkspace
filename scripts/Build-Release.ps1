@@ -1,5 +1,5 @@
 param(
-    [string]$Version = '0.9.5',
+    [string]$Version = '0.9.6',
     [string]$OutputRoot,
     [string]$Publisher = 'CN=Snap Workspace Development',
     [string]$PfxPath,

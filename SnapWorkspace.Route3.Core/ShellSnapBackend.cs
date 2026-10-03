@@ -1,18 +1,27 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Text.Json.Serialization;
 
 namespace SnapWorkspace.Route3;
 
 public sealed class ShellSnapBackendOptions
 {
-    public bool RequireKnownShellBinary { get; init; } = true;
     public int GeometryTolerancePixels { get; init; } = 12;
     public int MaximumWindowsPerSubmission { get; init; } = 4;
 }
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ShellCompatibilityLevel
+{
+    Unavailable,
+    RuntimeCompatible,
+    KnownBaseline
+}
+
 public sealed record SnapCapability(
     bool Supported,
+    ShellCompatibilityLevel CompatibilityLevel,
     bool IsKnownShellBinary,
     bool HasManager2,
     bool HasManager3,
@@ -99,7 +108,7 @@ public sealed class ShellSnapBackend
     public SnapCapability Probe()
     {
         var binary = InspectShellBinary();
-        if (_options.RequireKnownShellBinary && !binary.IsKnown)
+        if (!binary.Exists)
         {
             return Capability(
                 supported: false,
@@ -109,7 +118,7 @@ public sealed class ShellSnapBackend
                 hasManager4: false,
                 maximumLongAxis: null,
                 maximumShortAxis: null,
-                reason: "Shell 二进制不在已验证基线中，建议回退路线二。");
+                reason: "系统中不存在 windowsudk.shellcommon.dll，无法启用路线三。");
         }
 
         try
@@ -166,7 +175,9 @@ public sealed class ShellSnapBackend
                 maximumLongAxis,
                 maximumShortAxis,
                 hasManager2 && hasManager3
-                    ? "路线三能力探测通过。"
+                    ? binary.IsKnown
+                        ? "路线三能力探测通过（已验证 Shell 基线）。"
+                        : "路线三能力探测通过；Shell 哈希未知，但运行时接口兼容。"
                     : $"管理器接口不可用：QI2={Hr(qi2Hr)}, QI3={Hr(qi3Hr)}。");
         }
         catch (Exception exception)
@@ -219,12 +230,6 @@ public sealed class ShellSnapBackend
         }
 
         var binary = InspectShellBinary();
-        if (_options.RequireKnownShellBinary && !binary.IsKnown)
-        {
-            return Failure(
-                unchecked((int)0x80004005),
-                "Shell 二进制不在已验证基线中，建议回退路线二。");
-        }
 
         var nativeIds = new NativeInterop.WindowId[assignments.Count];
         var nativeRects = new NativeInterop.WinRtRect[assignments.Count];
@@ -310,7 +315,9 @@ public sealed class ShellSnapBackend
                 true,
                 false,
                 snapHr,
-                $"SnapWindows 已提交 {outcomes.Length} 个窗口；调用方应先运行消息循环，再调用 Verify。",
+                $"SnapWindows 已提交 {outcomes.Length} 个窗口" +
+                $"（{(binary.IsKnown ? "已验证 Shell 基线" : "运行时兼容 Shell")}）；" +
+                "调用方应先运行消息循环，再调用 Verify。",
                 outcomes);
         }
         catch (Exception exception)
@@ -402,6 +409,11 @@ public sealed class ShellSnapBackend
         string reason) =>
         new(
             supported,
+            supported
+                ? binary.IsKnown
+                    ? ShellCompatibilityLevel.KnownBaseline
+                    : ShellCompatibilityLevel.RuntimeCompatible
+                : ShellCompatibilityLevel.Unavailable,
             binary.IsKnown,
             hasManager2,
             hasManager3,
@@ -457,7 +469,7 @@ public sealed class ShellSnapBackend
         var path = Path.Combine(Environment.SystemDirectory, "windowsudk.shellcommon.dll");
         if (!File.Exists(path))
         {
-            return new ShellBinaryInfo(path, null, null, false);
+            return new ShellBinaryInfo(path, null, null, false, false);
         }
 
         var version = FileVersionInfo.GetVersionInfo(path).FileVersion;
@@ -467,6 +479,7 @@ public sealed class ShellSnapBackend
             path,
             version,
             hash,
+            true,
             string.Equals(hash, KnownShellCommonSha256, StringComparison.OrdinalIgnoreCase));
     }
 
@@ -485,6 +498,7 @@ public sealed class ShellSnapBackend
         string Path,
         string? Version,
         string? Sha256,
+        bool Exists,
         bool IsKnown);
 
     private sealed class ShellThreadContext : IDisposable

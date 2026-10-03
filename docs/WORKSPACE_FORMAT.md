@@ -1,6 +1,6 @@
 # 工作区数据格式
 
-Snap Workspace 0.9.5 使用 schema v5 JSON 保存工作区。本文说明文件位置、字段、约束、导入导出和迁移行为。
+Snap Workspace 0.9.6 使用 schema v5 JSON 保存工作区。本文说明文件位置、字段、约束、导入导出和迁移行为。
 
 > 推荐通过 GUI 编辑。手工修改前先退出应用并备份 `%LOCALAPPDATA%\SnapWorkspace`。格式错误的单个文件会被跳过，但不会自动删除。
 

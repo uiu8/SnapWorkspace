@@ -1,6 +1,6 @@
 # Snap Workspace 文档中心
 
-本页是 0.9.5 中文文档的统一入口。先按你的目标选择文档；历史发布说明保留原语言，用于追踪行为演进。
+本页是 0.9.6 中文文档的统一入口。先按你的目标选择文档；历史发布说明保留原语言，用于追踪行为演进。
 
 ## 我想使用软件
 
@@ -10,9 +10,12 @@
 4. 需要迁移、备份或手工检查 JSON 时阅读 [工作区数据格式](WORKSPACE_FORMAT.md)；
 5. 需要提交问题时先阅读 [隐私与诊断](PRIVACY_AND_DIAGNOSTICS.md)。
 
+选择 Windows 版本或判断其他电脑能否使用时，先看 [Windows 版本建议与兼容边界](WINDOWS_COMPATIBILITY.md)。
+
 ## 我想理解实现
 
 - [架构与恢复链路](ARCHITECTURE.md)：组件边界、原生 Shell 调用、捕捉和恢复事务；
+- [原生 Snap 接口发现与调用](NATIVE_SNAP_INTERNALS.md)：元数据、DLL / PDB 证据、接口调用步骤和跨版本风险；
 - [核心概念与行为边界](CORE_CONCEPTS.md)：为什么不能把兼容定位伪装成 Snap Group；
 - [工作区数据格式](WORKSPACE_FORMAT.md)：schema v5 实体、约束和迁移；
 - [命令行与测试命令](CLI_REFERENCE.md)：探测、只读检查、示例和测试矩阵。
@@ -26,10 +29,11 @@
 
 ## 版本说明
 
-当前版本：[0.9.5](RELEASE_NOTES_0.9.5.md)。
+当前版本：[0.9.6](RELEASE_NOTES_0.9.6.md)。
 
 历史版本：
 
+- [0.9.5](RELEASE_NOTES_0.9.5.md)；
 - [0.9.4](RELEASE_NOTES_0.9.4.md)、[0.9.3](RELEASE_NOTES_0.9.3.md)、[0.9.2](RELEASE_NOTES_0.9.2.md)、[0.9.1](RELEASE_NOTES_0.9.1.md)、[0.9.0](RELEASE_NOTES_0.9.0.md)；
 - [0.8.0](RELEASE_NOTES_0.8.0.md)、[0.7.0](RELEASE_NOTES_0.7.0.md)、[0.6.1](RELEASE_NOTES_0.6.1.md)、[0.6.0](RELEASE_NOTES_0.6.0.md)；
 - [0.5.2](RELEASE_NOTES_0.5.2.md)、[0.5.1](RELEASE_NOTES_0.5.1.md)、[0.5.0](RELEASE_NOTES_0.5.0.md)；
@@ -37,7 +41,7 @@
 
 ## 文档适用范围
 
-- 软件版本：0.9.5；
+- 软件版本：0.9.6；
 - 工作区格式：schema v5；
 - 平台：Windows 11 x64；
 - 当前原生恢复范围：主显示器、每次最多 4 个原生窗口；

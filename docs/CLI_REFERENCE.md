@@ -28,7 +28,7 @@ dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- probe
 dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- probe
 ```
 
-输出 JSON 包含：是否支持、Shell 是否为已知二进制、管理器接口、轴向策略、有效窗口上限、DLL 路径/版本/哈希和 WindowId 提供器。支持时退出码为 0，不支持时为 2。
+输出 JSON 包含：是否支持、`KnownBaseline`/`RuntimeCompatible`/`Unavailable` 兼容等级、Shell 是否为已知二进制、管理器接口、轴向策略、有效窗口上限、DLL 路径/版本/哈希和 WindowId 提供器。未知哈希但运行时探测通过时退出码仍为 0；不支持时为 2。
 
 ### `list-layouts`
 

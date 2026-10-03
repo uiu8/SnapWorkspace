@@ -1,0 +1,380 @@
+{
+  "observedAt": "2026-10-03",
+  "scope": "Static x64 Windows Shell DLL and matching Microsoft PDB inspection. Not a runtime compatibility certification.",
+  "samples": [
+    {
+      "Version": "10.0.22000.184",
+      "RequestedIndexVersion": "10.0.22000.120",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/16641B39335000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "1209DFA36DB461060023116CE03D38CBF29DC414BE472B17DC01CA7263BF383A",
+      "IndexSha256": "11fbcfd0dd3d77f5be213712175409f874a25d686eb3c0885b79e79aac9a728b",
+      "HashMatchesIndex": false,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 2557768,
+        "Manager2": -1,
+        "Manager3": -1,
+        "Manager4": -1,
+        "Statics": 2557752,
+        "Statics2": -1
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "15f71321-f769-ed71-9562-6635dfba84cd",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/15F71321F769ED7195626635DFBA84CD1/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs.",
+      "PdbSha256": "F21DFAB3B9B1619AF718C5047D64C1475F9D0F99D63D760C255F55DF433BE14D",
+      "PdbSymbolCounts": {
+        "Manager2": 0,
+        "Manager3": 0,
+        "Manager4": 0,
+        "V3SnapWindows": 0
+      },
+      "PdbExcerpts": [
+        "0x00068370  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::factory_implementation::SnapLayoutManager, struct winrt::Windows::Foundation::IActivationFactory, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x00204050  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager>::find_interface(struct winrt::guid const & __ptr64)const __ptr64"
+      ]
+    },
+    {
+      "Version": "10.0.22621.317",
+      "RequestedIndexVersion": "10.0.22621.317",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/13BD7188472000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "6181559163981344AC7068FA1889BA5B87D3198CF3D4DBBAFF7EBA01717153B8",
+      "IndexSha256": "6181559163981344ac7068fa1889ba5b87d3198cf3d4dbbaff7eba01717153b8",
+      "HashMatchesIndex": true,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 3572552,
+        "Manager2": 3572568,
+        "Manager3": -1,
+        "Manager4": -1,
+        "Statics": 3572520,
+        "Statics2": 3572536
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "cf61cf89-bc17-6397-75e6-3c5734dfbe2e",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/CF61CF89BC17639775E63C5734DFBE2E1/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs.",
+      "PdbSha256": "6D4856D0D65EDB1126365724DA8EBAAE64FDA229A0816C36D4706CF91B360373",
+      "PdbSymbolCounts": {
+        "Manager2": 26,
+        "Manager3": 0,
+        "Manager4": 0,
+        "V3SnapWindows": 0
+      },
+      "PdbExcerpts": [
+        "0x00368348  0  .rdata  class std::array<struct winrt::guid, 2> const winrt::impl::uncloaked_iids<struct winrt::impl::interface_list<struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2>>::value",
+        "0x0024ba40  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::factory_implementation::SnapLayoutManager, struct winrt::Windows::Foundation::IActivationFactory, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x0024baa0  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64"
+      ]
+    },
+    {
+      "Version": "10.0.22621.2567",
+      "RequestedIndexVersion": "10.0.22621.2506",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/78CE9CED4e2000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "0BA93728D485BB77DE2E66D7CCAA5A547AB330577E7D123A0540C16DA8F94A37",
+      "IndexSha256": "f848288277aab67047b76e29316af4651e66faff8ac7d784ba2a03bd35eb09ca",
+      "HashMatchesIndex": false,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 3936472,
+        "Manager2": 3936488,
+        "Manager3": -1,
+        "Manager4": -1,
+        "Statics": 3936520,
+        "Statics2": 3936536
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "11b21a32-ef1c-8a61-8056-83a34a03b0ef",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/11B21A32EF1C8A61805683A34A03B0EF1/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs."
+    },
+    {
+      "Version": "10.0.22621.3007",
+      "RequestedIndexVersion": "10.0.22621.3007",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/EB5A659A4f3000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "1D24E6EA7A5917BAD7DA5250B239F3439FC82490A1F10A5265D197613871116B",
+      "IndexSha256": "1d24e6ea7a5917bad7da5250b239f3439fc82490a1f10a5265d197613871116b",
+      "HashMatchesIndex": true,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 3991912,
+        "Manager2": 3991928,
+        "Manager3": -1,
+        "Manager4": -1,
+        "Statics": 3991960,
+        "Statics2": 3991976
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "533bfc5a-924a-6ba2-ef07-343332606707",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/533BFC5A924A6BA2EF073433326067071/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs.",
+      "PdbSha256": "067B0888B9C340BB6D3C6BCB95E20560039F7C41AECD9E729BEAB8029924263A",
+      "PdbSymbolCounts": {
+        "Manager2": 26,
+        "Manager3": 0,
+        "Manager4": 0,
+        "V3SnapWindows": 0
+      },
+      "PdbExcerpts": [
+        "0x003ce968  0  .rdata  class std::array<struct winrt::guid, 2> const winrt::impl::uncloaked_iids<struct winrt::impl::interface_list<struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2>>::value",
+        "0x0009d230  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::factory_implementation::SnapLayoutManager, struct winrt::Windows::Foundation::IActivationFactory, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x002a7810  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64"
+      ]
+    },
+    {
+      "Version": "10.0.22621.3085",
+      "RequestedIndexVersion": "10.0.22621.3085",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/8801905E4f9000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "C0065F40F44C0CCCCAB8119DF0629279166256195C32A596FE042E7CBDE86881",
+      "IndexSha256": "c0065f40f44c0ccccab8119df0629279166256195c32a596fe042e7cbde86881",
+      "HashMatchesIndex": true,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 4012960,
+        "Manager2": 4012976,
+        "Manager3": 4012992,
+        "Manager4": -1,
+        "Statics": 4013056,
+        "Statics2": 4013072
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "378f86fe-2c2b-88c1-9272-50b2f97d70c6",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/378F86FE2C2B88C1927250B2F97D70C61/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs.",
+      "PdbSha256": "0C16C2218D08FC30B2A36CC5773DFA7B148CDF67DF3B6C57A4C59946F1E42881",
+      "PdbSymbolCounts": {
+        "Manager2": 30,
+        "Manager3": 27,
+        "Manager4": 0,
+        "V3SnapWindows": 1
+      },
+      "PdbExcerpts": [
+        "0x0009cf80  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::factory_implementation::SnapLayoutManager, struct winrt::Windows::Foundation::IActivationFactory, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x0010bfc0  2  .text  public virtual: int __cdecl winrt::impl::produce<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>::SnapWindows(unsigned int, struct winrt::impl::struct_Windows_UI_WindowId * __ptr64, unsigned int, struct winrt::Windows::Foundation::Rect * __ptr64) __ptr64",
+        "0x003d3ba0  0  .rdata  class std::array<struct winrt::guid, 3> const winrt::impl::uncloaked_iids<struct winrt::impl::interface_list<struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>>::value",
+        "0x0010c210  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>::find_interface(struct winrt::guid const & __ptr64)const __ptr64"
+      ]
+    },
+    {
+      "Version": "10.0.22621.3155",
+      "RequestedIndexVersion": "10.0.22621.3155",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/F9213A714f8000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "590689F666101F51623F2F3B4017945B203BB2387CB602E12BD3BC9EF0997858",
+      "IndexSha256": "590689f666101f51623f2f3b4017945b203bb2387cb602e12bd3bc9ef0997858",
+      "HashMatchesIndex": true,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 4012984,
+        "Manager2": 4013000,
+        "Manager3": 4013016,
+        "Manager4": -1,
+        "Statics": 4012952,
+        "Statics2": 4012968
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "46756e13-2244-f20c-b411-fa59832a5493",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/46756E132244F20CB411FA59832A54931/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs.",
+      "PdbSha256": "DD5F24BCCD9E612F10B115300627683C384C825125F547AFAF9F2B0C6E54BDD8",
+      "PdbSymbolCounts": {
+        "Manager2": 30,
+        "Manager3": 27,
+        "Manager4": 0,
+        "V3SnapWindows": 1
+      },
+      "PdbExcerpts": [
+        "0x0009cfb0  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::factory_implementation::SnapLayoutManager, struct winrt::Windows::Foundation::IActivationFactory, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x0010c2a0  2  .text  public virtual: int __cdecl winrt::impl::produce<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>::SnapWindows(unsigned int, struct winrt::impl::struct_Windows_UI_WindowId * __ptr64, unsigned int, struct winrt::Windows::Foundation::Rect * __ptr64) __ptr64",
+        "0x003d3bb8  0  .rdata  class std::array<struct winrt::guid, 3> const winrt::impl::uncloaked_iids<struct winrt::impl::interface_list<struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>>::value",
+        "0x0010c4f0  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>::find_interface(struct winrt::guid const & __ptr64)const __ptr64"
+      ]
+    },
+    {
+      "Version": "10.0.22621.3294",
+      "RequestedIndexVersion": "10.0.22621.3235",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/6B14B9D7506000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "83C876F1E59A384CBDF0EBA4C028281899BB2F5D580BF46CC0A7AE0F09B88517",
+      "IndexSha256": "675db4a100e4deab8dd38069ca984086707b74f93ca0777e470ac7665e87263d",
+      "HashMatchesIndex": false,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 4052120,
+        "Manager2": 4052136,
+        "Manager3": 4052152,
+        "Manager4": -1,
+        "Statics": 4052088,
+        "Statics2": 4052104
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "ec1caf9f-3e5b-53c6-1c1f-a7f31db92ecb",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/EC1CAF9F3E5B53C61C1FA7F31DB92ECB1/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs."
+    },
+    {
+      "Version": "10.0.22621.3447",
+      "RequestedIndexVersion": "10.0.22621.3447",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/5BBB9313518000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "E61B56000D43009030A7AC7F563538EEA371998FD50987A542A96B472D0D408D",
+      "IndexSha256": "e61b56000d43009030a7ac7f563538eea371998fd50987a542a96b472d0d408d",
+      "HashMatchesIndex": true,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 4100632,
+        "Manager2": 4100648,
+        "Manager3": 4100664,
+        "Manager4": -1,
+        "Statics": 4100600,
+        "Statics2": 4100616
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "d9ffd9f2-13bc-6f2d-1ffe-232f236bee63",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/D9FFD9F213BC6F2D1FFE232F236BEE631/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs."
+    },
+    {
+      "Version": "10.0.22621.4317",
+      "RequestedIndexVersion": "10.0.22621.4317",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/17D1B96B577000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "E1B9386CED17866565417F0C1C50D4190993DC78A01865040DC772D6AFBADBEC",
+      "IndexSha256": "e1b9386ced17866565417f0c1c50d4190993dc78a01865040dc772d6afbadbec",
+      "HashMatchesIndex": true,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 4400624,
+        "Manager2": 4400640,
+        "Manager3": 4400656,
+        "Manager4": 4400600,
+        "Statics": 4400568,
+        "Statics2": 4400584
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "c3cc1eb6-7edf-1f3e-a40f-e931bc2faeee",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/C3CC1EB67EDF1F3EA40FE931BC2FAEEE1/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs.",
+      "PdbSha256": "EA1C56642739225E9A97B97A21F68917BE7D069380560F408CBE4A9D0A9F34D6",
+      "PdbSymbolCounts": {
+        "Manager2": 29,
+        "Manager3": 27,
+        "Manager4": 27,
+        "V3SnapWindows": 1
+      },
+      "PdbExcerpts": [
+        "0x000a5aa0  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::factory_implementation::SnapLayoutManager, struct winrt::Windows::Foundation::IActivationFactory, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x00145780  2  .text  public virtual: int __cdecl winrt::impl::produce<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager4>::LaunchAsGroup(unsigned int, void * __ptr64 * __ptr64) __ptr64",
+        "0x002fc890  2  .text  public virtual: int __cdecl winrt::impl::produce<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>::SnapWindows(unsigned int, struct winrt::impl::struct_Windows_UI_WindowId * __ptr64, unsigned int, struct winrt::Windows::Foundation::Rect * __ptr64) __ptr64",
+        "0x00145b30  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager4>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x004325f0  0  .rdata  class std::array<struct winrt::guid, 4> const winrt::impl::uncloaked_iids<struct winrt::impl::interface_list<struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager4>>::value"
+      ]
+    },
+    {
+      "Version": "10.0.22621.7372",
+      "RequestedIndexVersion": "10.0.22621.7376",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/30974A8059f000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "5201400B00810759E7B9D07F2BEE43AEDD4B8B7EEE71DFB33B33DC39DCA8358D",
+      "IndexSha256": "e6bb0a1bc3264afd332a692b3fda9a9ffd480f7ad00682b84584cd4fbcf326a7",
+      "HashMatchesIndex": false,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 4526224,
+        "Manager2": 4526240,
+        "Manager3": 4526256,
+        "Manager4": 4526272,
+        "Statics": 4526184,
+        "Statics2": 4526200
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "ffc68615-052b-12c1-140b-99bfe25f87f8",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/FFC68615052B12C1140B99BFE25F87F81/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs."
+    },
+    {
+      "Version": "10.0.26100.1",
+      "RequestedIndexVersion": "10.0.26100.1",
+      "Source": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.dll/63FFC8E3497000/windowsudk.shellcommon.dll",
+      "IndexSource": "https://winbindex.m417z.com/data/by_filename_compressed/windowsudk.shellcommon.dll.json.gz",
+      "Sha256": "288A5621A01BC7EB8E527625759752BAB268DB4FAF788C1B3621CFFD969BE6B7",
+      "IndexSha256": "288a5621a01bc7eb8e527625759752bab268db4faf788c1b3621cffd969be6b7",
+      "HashMatchesIndex": true,
+      "Machine": 34404,
+      "PeSymbolIdentityMatches": true,
+      "IidByteOffsets": {
+        "Manager1": 3820560,
+        "Manager2": 3822368,
+        "Manager3": 3831352,
+        "Manager4": -1,
+        "Statics": 3821568,
+        "Statics2": 3821552
+      },
+      "Pdb": {
+        "Name": "windowsudk.shellcommon.pdb",
+        "Guid": "336b7ec2-ecf7-a5de-e5df-087b046d413f",
+        "Age": 1,
+        "Url": "https://msdl.microsoft.com/download/symbols/windowsudk.shellcommon.pdb/336B7EC2ECF7A5DEE5DF087B046D413F1/windowsudk.shellcommon.pdb"
+      },
+      "Caveat": "Static IID presence is not a runtime QueryInterface or behavior test. Absence alone does not rule out dynamically generated IDs.",
+      "PdbSha256": "E1263F91F049DD536D1897CAA520331AFCF73CB717622EC4A65E6C74471D62F3",
+      "PdbSymbolCounts": {
+        "Manager2": 42,
+        "Manager3": 39,
+        "Manager4": 0,
+        "V3SnapWindows": 1
+      },
+      "PdbExcerpts": [
+        "0x000f5100  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::factory_implementation::SnapLayoutManager, struct winrt::Windows::Foundation::IActivationFactory, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManagerStatics2>::find_interface(struct winrt::guid const & __ptr64)const __ptr64",
+        "0x00297cb0  2  .text  public virtual: int __cdecl winrt::impl::produce<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>::SnapWindows(unsigned int, struct winrt::impl::struct_Windows_UI_WindowId * __ptr64, unsigned int, struct winrt::Windows::Foundation::Rect * __ptr64) __ptr64",
+        "0x003cecc0  0  .rdata  class std::array<struct winrt::guid, 3> const winrt::impl::uncloaked_iids<struct winrt::impl::interface_list<struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>>::value",
+        "0x00298550  2  .text  public virtual: void * __ptr64 __cdecl winrt::implements<struct winrt::WindowsUdk::UI::Shell::implementation::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::SnapLayoutManager, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager2, struct winrt::WindowsUdk::UI::Shell::ISnapLayoutManager3>::find_interface(struct winrt::guid const & __ptr64)const __ptr64"
+      ]
+    }
+  ]
+}

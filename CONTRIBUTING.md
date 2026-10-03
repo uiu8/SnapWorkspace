@@ -23,7 +23,7 @@ dotnet run --project SnapWorkspace.Route3.Demo -c Release --no-build -- runtime-
 - Route 2/兼容定位与 Route 3 分开。兼容窗口可见，但不是 Snap Group 成员；
 - 后台表示恢复事务内没有可见顶层窗口，必要时使用应用专用协议；
 - 不对原生窗口做第二次位置校正；
-- 未知 Shell 二进制必须安全关闭 Route 3；
+- Shell 哈希只用于诊断和兼容等级；运行类、`IsSupported`、manager 或必需接口探测失败时必须安全关闭 Route 3；
 - 诊断不能自动上传，新增敏感字段默认关闭并添加隐私回归；
 - 多显示器设计恢复前，不向 schema 添加未验证字段。
 
@@ -44,7 +44,7 @@ PR 应说明：
 ## 打包候选版
 
 ```powershell
-.\scripts\Build-Release.ps1 -Version 0.9.5
+.\scripts\Build-Release.ps1 -Version 0.9.6
 ```
 
 portable 包只需要 .NET SDK；MSIX 还需要 Windows SDK。公开 MSIX 必须使用 Subject 与 manifest publisher 一致的可信证书。完整流程见 [构建与发布](docs/BUILD_AND_RELEASE.md)。

@@ -1,8 +1,8 @@
 # 构建与发布
 
-本文说明如何从源码构建、验证并发布 Snap Workspace 0.9.5。所有命令从仓库根目录执行。
+本文说明如何从源码构建、验证并发布 Snap Workspace 0.9.6。所有命令从仓库根目录执行。
 
-> Route 3 真实窗口测试需要交互式 Windows 桌面和已验证的 Shell。GitHub 托管 CI 只能覆盖不依赖真实 Snap 会话的回归，不能证明某个新 Windows build 已兼容。
+> Route 3 真实窗口测试需要交互式 Windows 桌面和通过运行时能力探测的 Shell。GitHub 托管 CI 只能覆盖不依赖真实 Snap 会话的回归，不能证明某个新 Windows build 已兼容。
 
 ## 开发环境
 
@@ -125,16 +125,16 @@ Get-Content $report
 ## 构建发布包
 
 ```powershell
-.\scripts\Build-Release.ps1 -Version 0.9.5
+.\scripts\Build-Release.ps1 -Version 0.9.6
 ```
 
 默认输出：
 
 ```text
-artifacts\release-0.9.5\
-├─ SnapWorkspace-0.9.5-win-x64-portable.zip
-├─ SnapWorkspace-0.9.5-win-x64-self-contained.zip
-├─ SnapWorkspace-0.9.5-win-x64.msix       # 安装 Windows SDK 时
+artifacts\release-0.9.6\
+├─ SnapWorkspace-0.9.6-win-x64-portable.zip
+├─ SnapWorkspace-0.9.6-win-x64-self-contained.zip
+├─ SnapWorkspace-0.9.6-win-x64.msix       # 安装 Windows SDK 时
 └─ SHA256SUMS.txt
 ```
 
@@ -146,8 +146,8 @@ artifacts\release-0.9.5\
 
 ```powershell
 .\scripts\Build-Release.ps1 `
-  -Version 0.9.5 `
-  -OutputRoot '.\artifacts\candidate-0.9.5'
+  -Version 0.9.6 `
+  -OutputRoot '.\artifacts\candidate-0.9.6'
 ```
 
 ## 构建和签名 MSIX
@@ -155,20 +155,20 @@ artifacts\release-0.9.5\
 只要求生成 MSIX，缺少 Windows SDK 时失败：
 
 ```powershell
-.\scripts\Build-Release.ps1 -Version 0.9.5 -RequireMsix
+.\scripts\Build-Release.ps1 -Version 0.9.6 -RequireMsix
 ```
 
 明确只构建两个 ZIP、不生成 MSIX：
 
 ```powershell
-.\scripts\Build-Release.ps1 -Version 0.9.5 -SkipMsix
+.\scripts\Build-Release.ps1 -Version 0.9.6 -SkipMsix
 ```
 
 签名：
 
 ```powershell
 .\scripts\Build-Release.ps1 `
-  -Version 0.9.5 `
+  -Version 0.9.6 `
   -RequireMsix `
   -Publisher 'CN=Your Trusted Publisher' `
   -PfxPath 'C:\secure\SnapWorkspace.pfx' `
@@ -187,17 +187,17 @@ artifacts\release-0.9.5\
 ### SHA-256
 
 ```powershell
-$release = '.\artifacts\release-0.9.5'
+$release = '.\artifacts\release-0.9.6'
 Get-Content "$release\SHA256SUMS.txt"
-Get-FileHash "$release\SnapWorkspace-0.9.5-win-x64-self-contained.zip" -Algorithm SHA256
+Get-FileHash "$release\SnapWorkspace-0.9.6-win-x64-self-contained.zip" -Algorithm SHA256
 ```
 
 ### 解压和启动冒烟
 
 ```powershell
-$candidate = Join-Path $env:TEMP 'SnapWorkspace-0.9.5-candidate'
+$candidate = Join-Path $env:TEMP 'SnapWorkspace-0.9.6-candidate'
 Expand-Archive `
-  '.\artifacts\release-0.9.5\SnapWorkspace-0.9.5-win-x64-self-contained.zip' `
+  '.\artifacts\release-0.9.6\SnapWorkspace-0.9.6-win-x64-self-contained.zip' `
   -DestinationPath $candidate `
   -Force
 & "$candidate\SnapWorkspace.exe"
@@ -226,7 +226,7 @@ Expand-Archive `
 - 后台复用；
 - 应用支持和托盘冒烟。
 
-不运行真实 Route 3 窗口移动，因为托管 runner 没有适合验证的交互桌面和固定 Shell 基线。
+不运行真实 Route 3 窗口移动，因为托管 runner 没有适合验证的交互桌面和固定 Shell 会话。
 
 ### `release.yml`
 
@@ -266,6 +266,6 @@ Expand-Archive `
 - 任意几何不能直接进入 `SnapWindows`；
 - 兼容窗口可见但不属于 Snap Group；
 - 后台必须在恢复事务内无可见顶层窗口；
-- 未知 Shell 必须安全关闭原生路径；
+- 未知哈希进入运行时兼容探测；运行类、manager 或必需接口失败时必须安全关闭原生路径；
 - 诊断不得自动上传，新增敏感字段默认排除；
 - 在多显示器设计正式恢复前，不向 schema 偷渡未验证的显示器语义。

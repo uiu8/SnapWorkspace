@@ -10,9 +10,9 @@
     <RootNamespace>SnapWorkspace.App</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\SnapWorkspace.ico</ApplicationIcon>
-    <Version>0.9.5</Version>
-    <FileVersion>0.9.5.0</FileVersion>
-    <AssemblyVersion>0.9.5.0</AssemblyVersion>
+    <Version>0.9.6</Version>
+    <FileVersion>0.9.6.0</FileVersion>
+    <AssemblyVersion>0.9.6.0</AssemblyVersion>
     <NoWarn>$(NoWarn);WPF0001</NoWarn>
   </PropertyGroup>
   <ItemGroup>

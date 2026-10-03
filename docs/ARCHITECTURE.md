@@ -1,8 +1,8 @@
 # 架构与恢复链路
 
-本文面向维护者和希望理解底层行为的高级用户，说明 Snap Workspace 0.9.5 的组件、数据流、原生 Shell 调用、恢复事务和失败语义。
+本文面向维护者和希望理解底层行为的高级用户，说明 Snap Workspace 0.9.6 的组件、数据流、原生 Shell 调用、恢复事务和失败语义。
 
-> Route 3 使用私有 Windows Shell WinRT 合同。实现必须维持“已知二进制 + 接口能力 + 完整原生模型 + 结果验证”四道门，不能只因调用返回成功就宣称创建了 Snap Group。
+> Route 3 使用私有 Windows Shell WinRT 合同。实现必须维持“运行时接口能力 + 完整原生模型 + 结果验证”三道门，不能只因哈希已知或调用返回成功就宣称创建了 Snap Group。
 
 ## 技术栈与设计目标
 
@@ -89,26 +89,27 @@ flowchart LR
 
 ## 原生 Snap 的调用链
 
+接口的发现依据、历史版本证据和 ABI 细节见 [原生 Snap 调用原理](NATIVE_SNAP_INTERNALS.md)；建议系统版本和公开更新边界见 [Windows 兼容说明](WINDOWS_COMPATIBILITY.md)。
+
 ### 能力探测
 
 `ShellSnapBackend.Probe()` 不移动窗口，只验证当前环境：
 
-1. 找到 `windowsudk.shellcommon.dll` 并计算 SHA-256；
-2. 若启用严格基线且哈希不匹配，立即返回不支持；
-3. 通过 `RoGetActivationFactory` 激活 `WindowsUdk.UI.Shell.SnapLayoutManager`；
-4. 调用静态 `IsSupported`；
-5. 按主显示器工作区调用 `CreateForWorkAreaRect`；
-6. 查询 `ISnapLayoutManager2`、`3`、`4`；
-7. 读取长轴/短轴最大窗口策略；
-8. 汇总有效单次窗口上限和失败原因。
+1. 找到 `windowsudk.shellcommon.dll`，记录版本并计算 SHA-256；
+2. 通过 `RoGetActivationFactory` 激活 `WindowsUdk.UI.Shell.SnapLayoutManager`；
+3. 调用静态 `IsSupported`；
+4. 按主显示器工作区调用 `CreateForWorkAreaRect`；
+5. 查询 `ISnapLayoutManager2`、`3`、`4`；
+6. 读取长轴/短轴最大窗口策略；
+7. 汇总有效单次窗口上限、兼容等级和失败原因。
 
-0.9.5 内置已验证 Shell 哈希为：
+0.9.6 保留以下已验证 Shell 哈希作为诊断分类依据：
 
 ```text
 6F48A36E81DAA0A23AB5CE89F3BBC0B2ADE13BCD24B82C837300C25262675741
 ```
 
-该值是工程基线，不是微软公开兼容承诺。Windows 更新后哈希变化会使 Route 3 安全关闭，直到新版本重新分析和验证。
+该值不是微软公开兼容承诺，也不再是启用门。哈希匹配且接口探测通过时为 `KnownBaseline`；哈希未知但全部运行时能力通过时为 `RuntimeCompatible`；能力探测失败时为 `Unavailable`。只有最后一种状态会关闭 Route 3。
 
 ### 提交原生布局
 
@@ -119,10 +120,12 @@ flowchart LR
 - 工作区矩形有效；
 - 至少一个分配且不超过上限；
 - Zone 不重复；
-- Shell 二进制仍在已验证基线；
+- 本次会话的运行时能力探测通过；
 - 每个 HWND 可转换为 WindowId。
 
 随后构造两个等长数组：WindowId 数组和目标 `Rect` 数组。目标矩形由归一化 Zone 映射到当前主工作区。后端创建管理器、查询 `ISnapLayoutManager3`，从 vtable 调用 `SnapWindows`。
+
+当前 WindowId 提供器仍将有效 HWND 的位值转换为 `ulong`，这是已有环境验证过的假设，不是跨版本转换保证；公开互操作函数的后续评估见上述调用原理文档。
 
 调用返回后，上层等待配置的验证延迟，再用 DWM extended frame bounds 读取每个窗口实际可见矩形。四边误差默认容许 12 像素；任何窗口未到位都会把结果标记为失败并建议回退或重新提交完整布局。
 
@@ -290,13 +293,13 @@ Windows 设置等系统表面通过规范 URI 启动。捕捉到的 `Application
 
 诊断写入失败不会中断启动或恢复。默认事件只记录工作区 Id、数量、状态和异常类型，不记录名称、路径、参数或标题。支持包的应用明细和完整工作区定义是两个独立、默认关闭的选项。
 
-原生失败也与兼容行为隔离：未知 Shell、非原生布局或验证失败不会触发隐式的全窗口几何回退。这样失败是可见且可诊断的，不会把“位置差不多”报告为原生成功。
+原生失败也与兼容行为隔离：运行时能力不可用、非原生布局或结果验证失败不会触发隐式的全窗口几何回退。这样失败是可见且可诊断的，不会把“位置差不多”报告为原生成功。
 
 ## 当前架构边界
 
 - 主显示器恢复；
 - 原生窗口最多 4 个；
-- Shell ABI 只允许已验证哈希；
+- Shell ABI 必须通过当前会话的运行时接口探测；哈希只作为诊断和兼容等级；
 - 兼容定位无持续纠偏；
 - 后台隐藏只在恢复事务内有效；
 - 无跨进程持久化的活动会话；
